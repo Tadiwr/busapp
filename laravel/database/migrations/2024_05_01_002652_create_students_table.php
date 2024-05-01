@@ -13,10 +13,8 @@ return new class extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->id();
-            $table->string("firstname");
-            $table->string("lastname");
+            $table->integer("studentnumber");
             $table->bigInteger("auth_user_id");
-
             $table->foreign("auth_user_id")->references("id")->on("users");
             $table->timestamps();
         });
