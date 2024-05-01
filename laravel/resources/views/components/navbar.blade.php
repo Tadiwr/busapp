@@ -1,4 +1,5 @@
-   <!-- Sidebar -->
+<div class="flex flex-col w-full" >
+    <!-- Sidebar -->
    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
@@ -79,6 +80,7 @@
 
     </ul>
     <!-- End of Sidebar -->
+    <div>
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -196,6 +198,6 @@
 
 
             </div>
-          </div>
         </div>
-      </div>
+    </div>
+</div>
