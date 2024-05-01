@@ -17,6 +17,8 @@ return new class extends Migration
             $table->bigInteger("auth_user_id");
             $table->foreign("auth_user_id")->references("id")->on("users");
             $table->timestamps();
+
+            $table->foreign("bus_id")->references("id")->on("");
         });
     }
 

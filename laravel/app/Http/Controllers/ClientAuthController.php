@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Hash;
+use App\Models\Log;
 use App\Models\User;
 use App\Models\Student;
 use Illuminate\Http\Request;
@@ -18,6 +19,8 @@ class ClientAuthController extends Controller
         ]);
 
         if (Student::attemptLogin($request->studentnumber, $request->password)) {
+
+            Log::log("Student Logged In", auth()->user()->id);
             return redirect("/booking");
         }else{
             return redirect()->back()->withErrors("Invalid number or password");
@@ -53,6 +56,8 @@ class ClientAuthController extends Controller
             $student->auth_user_id = auth()->user()->id;
 
             $student->save();
+
+            Log::log("Student Registered", auth()->user()->id);
 
             return redirect("/booking");
         } else {

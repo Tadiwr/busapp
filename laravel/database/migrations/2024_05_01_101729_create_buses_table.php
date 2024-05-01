@@ -14,9 +14,14 @@ return new class extends Migration
         Schema::create('buses', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->integer('capacity');
+            $table->string('is_available');
+            $table->varchar('registration_number');
+            $table->integer('driver_id');
+
+            $table->foreign('');
         });
     }
-
     /**
      * Reverse the migrations.
      */

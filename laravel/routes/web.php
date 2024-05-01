@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LogController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\ClientAuthController;
@@ -20,6 +21,13 @@ Route::get('/', function () {
 });
 
 Route::get("/logout", function () {
+
+    if (auth()->user()->usertype == "ADMIN") {
+        Log::log("Admin User logged out", auth()->user()->id);
+    } else {
+        Log::log("Student logged out", auth()->user()->id);
+    }
+
     auth()->logout();
     return redirect("/");
 });
@@ -34,6 +42,8 @@ Route::prefix(("/admin"))->group(function () {
 
 
     Route::get("/", [AdminController::class, "index"])->middleware(["auth"]);
+
+    Route::get("/logs", [LogController::class, "index"])->middleware(["auth"]);
 
 });
 

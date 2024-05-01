@@ -14,6 +14,15 @@ return new class extends Migration
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->integer('bus_id');
+            $table->integer('route_id');
+            $table->integer('passenger_count');
+            $table->integer("student_id");
+
+            $table->foregin("bus_id")->reference("id")->on("buses");
+            $table->foreign("student_id")->references("id")->on("students");
+            $table->foreign("route_id")->references("id")->on("routes");
+
         });
     }
 

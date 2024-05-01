@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('bus_stops', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->integer('stop_id');
+
         });
     }
 
