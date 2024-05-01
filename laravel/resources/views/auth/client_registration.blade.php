@@ -80,14 +80,8 @@
 
             @csrf
 
-			<label for="uname">First Name: </label><br>
-			<input required type="text" name="firstname"  class= 'form-control'/>
-
-			<label for="uname">Last Name: </label><br>
-			<input required type="text" name="lastname"  class= 'form-control'/>
-
             <label for="uname">Student Number: </label><br>
-			<input required type="number" max="999999" name="studentnumber"  class= 'form-control'/>
+			<input required name="studentnumber"  class='form-control'/><br>
 
 			<label for="mail">Email: </label><br>
 			<input required type="text" id="mail" name="email" class= 'form-control'/>

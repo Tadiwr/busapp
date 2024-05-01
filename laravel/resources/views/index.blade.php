@@ -270,11 +270,11 @@ body {
                         <h2>Login Here</h2>
                         <form action="/auth/clients/login" method="post">
                             @csrf
-                            <input type="username" name="email" id="Username" placeholder="Enter Username Here">
+                            <input  type="text" name="studentnumber" placeholder="Student Number">
                             <input type="password" name="password" id="Password" placeholder="Enter Password Here">
                             <button type="submit" name="login_btn" class="btn btn-primary btn-user btn-block">Login</a></button>
                             <p class="link">{{"Don't have an account"}}<br>
-                                
+
                             <a href="/auth/clients/register">Sign up </a> here</a></p>
 
                             @if($errors->any())

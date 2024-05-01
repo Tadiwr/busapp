@@ -12,14 +12,30 @@ class ClientAuthController extends Controller
 {
     public function login(Request $request){
         request()->validate([
-            "email"=> ["required","email"],
+            // "email"=> ["required","email"],
+            "studentnumber" => ["required","numeric"],
             "password"=> ["required"],
         ]);
 
-        if (Auth::attempt($request->only("email","password"))) {
+        $student = Student::all()
+        ->where("studentnumber", $request->studentnumber)
+        ->first();
+
+        if ($student->count() == 0) {
+            return redirect()->back()->withErrors("Invalid Student Number");
+        }
+
+        $user = User::find($student->auth_user_id);
+
+        $creds = [
+            "email" => $user->email,
+            "password" => $request->password
+        ];
+
+        if (Auth::attempt($creds)) {
             return redirect("/booking");
         }else{
-            return redirect()->back()->withErrors("Invalid email or password");
+            return redirect()->back()->withErrors("Invalid number or password");
         }
 
     }
@@ -29,8 +45,6 @@ class ClientAuthController extends Controller
 
         $request->validate([
             "email"=> ["required","email", "unique:users,email"],
-            "firstname"=> ["required"],
-            "lastname"=> ["required"],
             "studentnumber"=> ["required", "numeric"],
             "password"=> ["required"]
         ]);
@@ -41,14 +55,10 @@ class ClientAuthController extends Controller
             return redirect()->back()->withErrors("Student number should be 6 digits in length");
         }
 
-
-        dd($request);
-
         $user = new User();
 
         $user->email = $request->email;
         $user->password =  Hash::make($request->password);
-        $user->username = $request->username;
         $user->usertype = "STUDENT";
 
         $user->save();
@@ -56,10 +66,10 @@ class ClientAuthController extends Controller
         if (Auth::attempt($request->only("email", "password"))) {
 
             $student = new Student();
-            $student->firstname = $request->firstname;
-            $student->lastname = $request->lastname;
-            $student->studentnumber = $request->studentnumber;
+            $student->studentnumber = (int) $request->studentnumber;
             $student->auth_user_id = auth()->user()->id;
+
+            $student->save();
 
             return redirect("/booking");
         } else {
