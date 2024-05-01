@@ -11,28 +11,13 @@ use Illuminate\Support\Facades\Auth;
 class ClientAuthController extends Controller
 {
     public function login(Request $request){
+
         request()->validate([
-            // "email"=> ["required","email"],
             "studentnumber" => ["required","numeric"],
             "password"=> ["required"],
         ]);
 
-        $student = Student::all()
-        ->where("studentnumber", $request->studentnumber)
-        ->first();
-
-        if ($student->count() == 0) {
-            return redirect()->back()->withErrors("Invalid Student Number");
-        }
-
-        $user = User::find($student->auth_user_id);
-
-        $creds = [
-            "email" => $user->email,
-            "password" => $request->password
-        ];
-
-        if (Auth::attempt($creds)) {
+        if (Student::attemptLogin($request->studentnumber, $request->password)) {
             return redirect("/booking");
         }else{
             return redirect()->back()->withErrors("Invalid number or password");
@@ -48,8 +33,6 @@ class ClientAuthController extends Controller
             "studentnumber"=> ["required", "numeric"],
             "password"=> ["required"]
         ]);
-
-
 
         if (strlen($request->studentnumber) != 6) {
             return redirect()->back()->withErrors("Student number should be 6 digits in length");
@@ -75,7 +58,6 @@ class ClientAuthController extends Controller
         } else {
             return redirect()->back()->withErrors("Something wrong happend");
         }
-
     }
 
     public function showRegistrationPage() {
