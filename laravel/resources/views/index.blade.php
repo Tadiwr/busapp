@@ -256,7 +256,7 @@ body {
             <div class="menu">
                 <ul>
                     <li><a href="http://localhost/Project/index.php">HOME</a></li>
-                    <li><a href="http://localhost/Project/admin/adminlogin.php">ADMIN</a></li>
+                    <li><a href="/admin/login">ADMIN</a></li>
                 </ul>
             </div>
 
@@ -264,18 +264,31 @@ body {
         <div class="content">
             <h1>Book Your Ticket Now</h1>
             <!--    <button class="cn"><a href="http://localhost/Pain%20And%20Suffering/booking.php">BOOK NOW</a></button> -->
+                    <div class="form">
 
-                <div class="form">
-                    <h2>Login Here</h2>
-                    <form action="http://localhost/Project/login.php" method="post">
-                    <input type="username" name="Username" id="Username" placeholder="Enter Username Here">
-                    <input type="password" name="Password" id="Password" placeholder="Enter Password Here">
-                    <button type="submit" name="login_btn" class="btn btn-primary btn-user btn-block">Login</a></button>
-                    <p class="link">{{"Don't have an account"}}<br>
-                    <a href="http://localhost/Project/registration.php">Sign up </a> here</a></p>
-                </div>
+
+                        <h2>Login Here</h2>
+                        <form action="/auth/clients/login" method="post">
+                            @csrf
+                            <input type="username" name="email" id="Username" placeholder="Enter Username Here">
+                            <input type="password" name="password" id="Password" placeholder="Enter Password Here">
+                            <button type="submit" name="login_btn" class="btn btn-primary btn-user btn-block">Login</a></button>
+                            <p class="link">{{"Don't have an account"}}<br>
+                                
+                            <a href="/auth/clients/register">Sign up </a> here</a></p>
+
+                            @if($errors->any())
+                                @foreach($errors->all() as $error)
+                                    <p>{{$error}}</p>
+                                @endforeach
+                            @endif
+
+
                     </div>
+
+
                 </div>
+            </div>
         </div>
     </div>
     <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
